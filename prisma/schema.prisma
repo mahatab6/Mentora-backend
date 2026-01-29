@@ -14,11 +14,58 @@ datasource db {
 }
 
 model course {
-  id           Int    @id @default(autoincrement())
+  id           Int       @id @default(autoincrement())
   course_name  String
   course_price Int
   subject      String
   review       String
+  tutor_id     String
+  tutor        User      @relation(fields: [tutor_id], references: [id])
+  bookings     booking[]
+  reviews      review[]
+}
+
+model booking {
+  id              Int      @id @default(autoincrement())
+  booking_created DateTime @default(now())
+  course_info     Int
+  courses         course   @relation(fields: [course_info], references: [id])
+  student_info    String
+  students        User     @relation(fields: [student_info], references: [id])
+}
+
+model review {
+  id             Int    @id @default(autoincrement())
+  review_content String
+  course_id      Int
+  courses        course @relation(fields: [course_id], references: [id])
+  student_id     String
+  students       User   @relation(fields: [student_id], references: [id])
+}
+
+model Tutor {
+  id              Int      @id @default(autoincrement())
+  fullName        String
+  country         String
+  timezone        String
+  languages       String[]
+  subjects        String[]
+  photoUrl        String
+  introVideoUrl   String?
+  shortBio        String   @db.VarChar(150)
+  aboutMe         String   @db.Text
+  education       String
+  hourlyRate      Int
+  lessonDuration  String
+  totalLessons    Int      @default(0)
+  averageRating   Float    @default(0)
+  totalReviews    Int      @default(0)
+  isProfileActive Boolean  @default(false)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  tutor_id String
+  tutor    User   @relation(fields: [tutor_id], references: [id])
 }
 
 model User {
@@ -31,6 +78,12 @@ model User {
   updatedAt     DateTime  @updatedAt
   sessions      Session[]
   accounts      Account[]
+  courses       course[]
+
+  role     String?   @default("STUDENT")
+  bookings booking[]
+  reviews  review[]
+  tutors   Tutor[]
 
   @@unique([email])
   @@map("user")
@@ -82,4 +135,10 @@ model Verification {
 
   @@index([identifier])
   @@map("verification")
+}
+
+enum Role {
+  STUDENT
+  ADMIN
+  TUTOR
 }
