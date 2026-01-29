@@ -7,6 +7,8 @@ import { UserRole } from "../../type";
 
 const router = express.Router()
 
+router.get("/", tutorController.getAllTutor)
+
 router.post("/manage-profile",auth(UserRole.TUTOR), tutorController.postManageprofile)
 
 

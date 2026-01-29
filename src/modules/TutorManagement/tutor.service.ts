@@ -3,7 +3,7 @@ import { prisma } from "../../lib/prisma";
 
 
 
-const postManageprofile = async (data:Omit<Tutor,"">, id:string) =>{
+const postManageprofile = async (data:Omit<Tutor,"id" | "tutor_id" | "createdAt" | "updatedAt" | "totalLessons" | "averageRating" | "totalReviews">, id:string) =>{
     
     const existingTutor = await prisma.tutor.findUnique({
         where: {
@@ -24,7 +24,13 @@ const postManageprofile = async (data:Omit<Tutor,"">, id:string) =>{
     return result;
 }
 
+const getAllTutor = async () => {
+    const result = await prisma.tutor.findMany()
+    return result;
+}
+
 
 export const tutorService = {
-    postManageprofile
+    postManageprofile,
+    getAllTutor
 }
