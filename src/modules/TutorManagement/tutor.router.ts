@@ -9,6 +9,8 @@ const router = express.Router()
 
 router.get("/", tutorController.getAllTutor)
 
+router.get("/:id", tutorController.getUniqueTutor)
+
 router.post("/manage-profile",auth(UserRole.TUTOR), tutorController.postManageprofile)
 
 

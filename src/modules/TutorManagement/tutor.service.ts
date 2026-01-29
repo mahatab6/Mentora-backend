@@ -29,8 +29,18 @@ const getAllTutor = async () => {
     return result;
 }
 
+const getUniqueTutor = async (id: string) => {
+    const result = await prisma.tutor.findUnique({
+        where: {
+            tutor_id: id
+        }
+    })
+    return result;
+}
+
 
 export const tutorService = {
     postManageprofile,
-    getAllTutor
+    getAllTutor,
+    getUniqueTutor
 }
