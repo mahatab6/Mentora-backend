@@ -4,7 +4,9 @@ import { tutorService } from "./tutor.service";
 
 const postManageprofile = async (req:Request, res:Response) => {
     try {
-        const result = await tutorService.postManageprofile
+        const id = req.user?.id
+        const email = req.user?.email
+        const result = await tutorService.postManageprofile(req.body)
     } catch (error) {
         
     }
