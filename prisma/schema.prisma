@@ -64,7 +64,7 @@ model Tutor {
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
 
-  tutor_id String
+  tutor_id String @unique
   tutor    User   @relation(fields: [tutor_id], references: [id])
 }
 
