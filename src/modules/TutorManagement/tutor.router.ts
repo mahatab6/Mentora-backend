@@ -9,7 +9,11 @@ const router = express.Router()
 
 router.get("/", tutorController.getAllTutor)
 
+router.get("/availability/:id", tutorController.getAvailability)
+
 router.get("/:id", tutorController.getUniqueTutor)
+
+router.post("/manage-availability",auth(UserRole.TUTOR), tutorController.postManageAvailability)
 
 router.post("/manage-profile",auth(UserRole.TUTOR), tutorController.postManageprofile)
 

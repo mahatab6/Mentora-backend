@@ -1,5 +1,6 @@
-import { Tutor } from "../../../generated/prisma/client";
+import { Tutor, tutorAvailability } from "../../../generated/prisma/client";
 import { prisma } from "../../lib/prisma";
+import { AvailabilityDTO } from "../../type";
 
 
 
@@ -88,8 +89,41 @@ const getUniqueTutor = async (id: string) => {
 }
 
 
+
+const postManageAvailability = async (
+  data:AvailabilityDTO,
+  id: string
+) => {
+  const payload = data.hours.map((hour) => ({
+    tutor_id: id,
+    date: new Date(data.date),
+    hour,
+    status: "available",
+  }));
+
+  const result = await prisma.tutorAvailability.createMany({
+    data: payload,
+  });
+
+  return result
+};
+
+
+const getAvailability = async (id: string) => {
+  const result = await prisma.tutorAvailability.findMany({
+    where: {
+      tutor_id: id
+    }
+  })
+  return result;
+};
+
+
+
 export const tutorService = {
     postManageprofile,
     getAllTutor,
-    getUniqueTutor
+    getUniqueTutor,
+    postManageAvailability,
+    getAvailability
 }

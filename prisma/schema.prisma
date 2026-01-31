@@ -80,13 +80,23 @@ model User {
   accounts      Account[]
   courses       course[]
 
-  role     String?   @default("STUDENT")
-  bookings booking[]
-  reviews  review[]
-  tutors   Tutor[]
+  role                String?             @default("STUDENT")
+  bookings            booking[]
+  reviews             review[]
+  tutors              Tutor[]
+  tutorAvailabilities tutorAvailability[]
 
   @@unique([email])
   @@map("user")
+}
+
+model tutorAvailability {
+  id       Int      @id @default(autoincrement())
+  date     DateTime
+  hour     Int
+  status   String   @default("available") @db.VarChar(40)
+  tutor_id String
+  tutor    User     @relation(fields: [tutor_id], references: [id])
 }
 
 model Session {
