@@ -25,7 +25,8 @@ const postManageprofile = async (data:Omit<Tutor,"id" | "tutor_id" | "createdAt"
 }
 
 const getAllTutor = async (filters: any) => {
-  const { search, subject, price, rating } = filters;
+  const { search, subject, price, rating, page = "1", limit = "10" } = filters;
+  const skip = (Number(page) - 1) * Number(limit);
   const whereConditions: any = {};
 
   if (search) {
@@ -56,15 +57,26 @@ const getAllTutor = async (filters: any) => {
     whereConditions.rating = { gte: minRating };
   }
 
-  const result = await prisma.tutor.findMany({
-    where: whereConditions,
-    orderBy: {
-      createdAt: 'desc',
-    },
-  });
+  const [result, total] = await Promise.all([
+    prisma.tutor.findMany({
+      where: whereConditions,
+      skip: skip,
+      take: Number(limit),
+      orderBy: { createdAt: 'desc' },
+    }),
+    prisma.tutor.count({ where: whereConditions })
+  ]);
 
-  return result;
-};
+  return {
+    tutors: result,
+    meta: {
+      total,
+      page: Number(page),
+      limit: Number(limit),
+      totalPages: Math.ceil(total / Number(limit))
+    }
+}
+}
 
 const getUniqueTutor = async (id: string) => {
     const result = await prisma.tutor.findUnique({
