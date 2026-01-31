@@ -19,7 +19,10 @@ const postManageprofile = async (req: Request, res: Response) => {
 
 const getAllTutor = async (req: Request, res: Response) => {
   try {
-    const result = await tutorService.getAllTutor();
+    const filters = req.query; 
+    
+    const result = await tutorService.getAllTutor(filters);
+    
     res.status(200).json({
       success: true,
       data: result,
@@ -31,6 +34,8 @@ const getAllTutor = async (req: Request, res: Response) => {
     });
   }
 };
+
+
 const getUniqueTutor = async (req: Request, res: Response) => {
   try {
     const {id} = req.params

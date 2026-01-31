@@ -24,10 +24,47 @@ const postManageprofile = async (data:Omit<Tutor,"id" | "tutor_id" | "createdAt"
     return result;
 }
 
-const getAllTutor = async () => {
-    const result = await prisma.tutor.findMany()
-    return result;
-}
+const getAllTutor = async (filters: any) => {
+  const { search, subject, price, rating } = filters;
+  const whereConditions: any = {};
+
+  if (search) {
+    whereConditions.OR = [
+      { fullName: { contains: search, mode: 'insensitive' } },
+      { shortBio: { contains: search, mode: 'insensitive' } },
+    ];
+  }
+
+
+  if (subject && subject !== 'all') {
+    whereConditions.subjects = {
+      has: subject
+    };
+  }
+  if (price && price !== 'all') {
+    if (price.includes('-')) {
+      const [min, max] = price.split('-').map(Number);
+      whereConditions.hourlyRate = { gte: min, lte: max };
+    } else if (price.includes('+')) {
+      const min = Number(price.replace('+', ''));
+      whereConditions.hourlyRate = { gte: min };
+    }
+  }
+
+  if (rating && rating !== 'all') {
+    const minRating = parseFloat(rating.replace('+', ''));
+    whereConditions.rating = { gte: minRating };
+  }
+
+  const result = await prisma.tutor.findMany({
+    where: whereConditions,
+    orderBy: {
+      createdAt: 'desc',
+    },
+  });
+
+  return result;
+};
 
 const getUniqueTutor = async (id: string) => {
     const result = await prisma.tutor.findUnique({
