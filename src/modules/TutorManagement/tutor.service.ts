@@ -110,13 +110,28 @@ const postManageAvailability = async (
 
 
 const getAvailability = async (id: string) => {
+  const startOfToday = new Date();
+  startOfToday.setHours(0, 0, 0, 0);
+
+  const endOfToday = new Date();
+  endOfToday.setHours(23, 59, 59, 999);
+
   const result = await prisma.tutorAvailability.findMany({
     where: {
-      tutor_id: id
-    }
-  })
+      tutor_id: id,
+      date: {
+        gte: startOfToday,
+        lte: endOfToday,
+      },
+    },
+    orderBy: {
+      hour: "asc",
+    },
+  });
+
   return result;
 };
+
 
 
 

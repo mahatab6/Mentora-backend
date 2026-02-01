@@ -14,24 +14,30 @@ datasource db {
 }
 
 model course {
-  id           Int       @id @default(autoincrement())
+  id           Int      @id @default(autoincrement())
   course_name  String
   course_price Int
   subject      String
   review       String
   tutor_id     String
-  tutor        User      @relation(fields: [tutor_id], references: [id])
-  bookings     booking[]
+  tutor        User     @relation(fields: [tutor_id], references: [id])
   reviews      review[]
 }
 
 model booking {
-  id              Int      @id @default(autoincrement())
-  booking_created DateTime @default(now())
-  course_info     Int
-  courses         course   @relation(fields: [course_info], references: [id])
-  student_info    String
-  students        User     @relation(fields: [student_info], references: [id])
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+
+  startTime       String
+  durationMinutes Int
+  price           Int
+  subject         String
+  studentId       String
+  status          Status
+  student         User   @relation(fields: [studentId], references: [id])
+
+  tutorId String
+  tutor   Tutor  @relation(fields: [tutorId], references: [tutor_id])
 }
 
 model review {
@@ -64,8 +70,9 @@ model Tutor {
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
 
-  tutor_id String @unique
-  tutor    User   @relation(fields: [tutor_id], references: [id])
+  tutor_id String    @unique
+  tutor    User      @relation(fields: [tutor_id], references: [id])
+  bookings booking[]
 }
 
 model User {
@@ -80,11 +87,12 @@ model User {
   accounts      Account[]
   courses       course[]
 
-  role                String?             @default("STUDENT")
-  bookings            booking[]
+  role String? @default("STUDENT")
+
   reviews             review[]
   tutors              Tutor[]
   tutorAvailabilities tutorAvailability[]
+  bookings            booking[]
 
   @@unique([email])
   @@map("user")
@@ -149,6 +157,11 @@ model Verification {
 
 enum Role {
   STUDENT
-  ADMIN
   TUTOR
+}
+
+enum Status {
+  upcoming
+  cancelled
+  completed
 }

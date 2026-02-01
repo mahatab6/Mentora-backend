@@ -5,6 +5,7 @@ import cors from "cors"
 import { auth } from "./lib/auth"
 import { toNodeHandler } from "better-auth/node"
 import { tutorRouter } from "./modules/TutorManagement/tutor.router"
+import { bookingRouter } from "./modules/Bookings/bookings.router"
 
 app.use(express.json())
 app.use(cors({
@@ -20,6 +21,9 @@ app.get('/', (req, res) => {
 
 // tutor routes
 app.use('/api/tutor', tutorRouter)
+
+// booking routes
+app.use('/api/bookings', bookingRouter)
 
 
 
