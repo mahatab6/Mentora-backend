@@ -5,8 +5,10 @@ import { UserRole } from "../../type";
 
 const router = express.Router()
 
-router.post('/',auth(UserRole.STUDENT), reviewsController.Postreview)
+router.post('/',auth(UserRole.STUDENT), reviewsController.postReview)
 
-r
+router.get('/', reviewsController.getReview)
+
+router.get('/:id', reviewsController.getReviewByID)
 
 export const reviewsRouter: Router = router;
