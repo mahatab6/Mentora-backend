@@ -88,8 +88,6 @@ const getUniqueTutor = async (id: string) => {
     return result;
 }
 
-
-
 const postManageAvailability = async (
   data:AvailabilityDTO,
   id: string
@@ -135,10 +133,11 @@ const getAvailability = async (id: string) => {
 
 
 
+
 export const tutorService = {
     postManageprofile,
     getAllTutor,
     getUniqueTutor,
     postManageAvailability,
-    getAvailability
+    getAvailability,
 }

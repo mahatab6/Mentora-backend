@@ -18,4 +18,5 @@ router.post("/manage-availability",auth(UserRole.TUTOR), tutorController.postMan
 router.post("/manage-profile",auth(UserRole.TUTOR), tutorController.postManageprofile)
 
 
+
 export const tutorRouter: Router = router;

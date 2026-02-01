@@ -14,14 +14,13 @@ datasource db {
 }
 
 model course {
-  id           Int      @id @default(autoincrement())
+  id           Int    @id @default(autoincrement())
   course_name  String
   course_price Int
   subject      String
   review       String
   tutor_id     String
-  tutor        User     @relation(fields: [tutor_id], references: [id])
-  reviews      review[]
+  tutor        User   @relation(fields: [tutor_id], references: [id])
 }
 
 model booking {
@@ -40,13 +39,16 @@ model booking {
   tutor   Tutor  @relation(fields: [tutorId], references: [tutor_id])
 }
 
-model review {
-  id             Int    @id @default(autoincrement())
-  review_content String
-  course_id      Int
-  courses        course @relation(fields: [course_id], references: [id])
-  student_id     String
-  students       User   @relation(fields: [student_id], references: [id])
+model Review {
+  id            Int      @id @default(autoincrement())
+  rating        Int
+  reviewContent String
+  replyContent  String?
+  tutor_id      String
+  tutor         Tutor    @relation(fields: [tutor_id], references: [tutor_id])
+  student_id    String
+  student       User     @relation(fields: [student_id], references: [id])
+  createdAt     DateTime @default(now())
 }
 
 model Tutor {
@@ -73,6 +75,7 @@ model Tutor {
   tutor_id String    @unique
   tutor    User      @relation(fields: [tutor_id], references: [id])
   bookings booking[]
+  reviews  Review[]
 }
 
 model User {
@@ -87,12 +90,11 @@ model User {
   accounts      Account[]
   courses       course[]
 
-  role String? @default("STUDENT")
-
-  reviews             review[]
+  role                String?             @default("STUDENT")
   tutors              Tutor[]
   tutorAvailabilities tutorAvailability[]
   bookings            booking[]
+  reviews             Review[]
 
   @@unique([email])
   @@map("user")

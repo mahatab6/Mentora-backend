@@ -52,6 +52,7 @@ const getUniqueTutor = async (req: Request, res: Response) => {
   }
 };
 
+
 const postManageAvailability = async (req: Request, res: Response) => {
   try {
     const id = req.user?.id;
@@ -84,10 +85,13 @@ const getAvailability = async (req: Request, res: Response) => {
   }
 }
 
+
+
+
 export const tutorController = {
   postManageprofile,
   getAllTutor,
   getUniqueTutor,
   postManageAvailability,
-  getAvailability
+  getAvailability,
 };

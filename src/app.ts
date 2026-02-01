@@ -6,6 +6,7 @@ import { auth } from "./lib/auth"
 import { toNodeHandler } from "better-auth/node"
 import { tutorRouter } from "./modules/TutorManagement/tutor.router"
 import { bookingRouter } from "./modules/Bookings/bookings.router"
+import { reviewsRouter } from "./modules/Reviews/reviews.router"
 
 app.use(express.json())
 app.use(cors({
@@ -24,6 +25,9 @@ app.use('/api/tutor', tutorRouter)
 
 // booking routes
 app.use('/api/bookings', bookingRouter)
+
+// reviews
+app.use('/api/reviews', reviewsRouter)
 
 
 
