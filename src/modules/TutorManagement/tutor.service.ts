@@ -166,6 +166,46 @@ const getAvailability = async (id: string) => {
   return result;
 };
 
+const getEarningsChartData = async (id: string) => {
+  const bookings = await prisma.booking.findMany({
+    where: {
+      tutorId: id,
+      status: "completed",
+    },
+    select: {
+      price: true,
+      createdAt: true,
+    },
+    orderBy: {
+      createdAt: "asc",
+    },
+  });
+
+  return bookings;
+};
+
+
+const getBooking = async (id: string) => {
+  const bookingInfo = await prisma.booking.findMany({
+    where: {
+      tutorId: id
+    },
+    include: {
+      student: {
+        select : {
+          name: true,
+          image: true
+        }
+      }
+    },
+    orderBy: {
+      createdAt: "asc"
+    }
+  })
+
+  return bookingInfo;
+};
+
 export const tutorService = {
   postManageprofile,
   getAllTutor,
@@ -173,4 +213,6 @@ export const tutorService = {
   postManageAvailability,
   getAvailability,
   getMetricsGrid,
+  getEarningsChartData,
+  getBooking
 };

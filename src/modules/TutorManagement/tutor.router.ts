@@ -17,7 +17,11 @@ router.post("/manage-availability",auth(UserRole.TUTOR), tutorController.postMan
 
 router.post("/manage-profile",auth(UserRole.TUTOR), tutorController.postManageprofile)
 
-router.get('/tutor-metricsgrid/:id',auth(UserRole.TUTOR), tutorController.getMetricsGrid)
+router.get('/tutor-metricsgrid/:id', tutorController.getMetricsGrid)
+
+router.get('/earnings-chart/:id',tutorController.getEarningsChartData)
+
+router.get('/booking/:id',tutorController.getBooking)
 
 
 
