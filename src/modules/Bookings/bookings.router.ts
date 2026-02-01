@@ -9,4 +9,6 @@ const router = express.Router()
 
 router.post('/',auth(UserRole.STUDENT), bookingController.postBooking)
 
+router.get('/', auth(UserRole.STUDENT, UserRole.TUTOR), bookingController.getBooking)
+
 export const bookingRouter: Router = router;

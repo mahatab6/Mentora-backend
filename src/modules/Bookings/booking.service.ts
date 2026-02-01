@@ -32,6 +32,29 @@ const postBooking = async (
   return result;
 };
 
+
+const getBooking = async (id:string) => {
+  const result = await prisma.booking.findMany({
+    where: {
+      OR:[
+        {studentId: id},
+        {tutorId: id}
+      ],
+    },
+    include: {
+      tutor: {
+        select: {
+          fullName: true
+        }
+      }
+    }
+
+  })
+
+  return result
+}
+
 export const bookingService = {
   postBooking,
+  getBooking
 };
