@@ -17,6 +17,8 @@ router.post("/manage-availability",auth(UserRole.TUTOR), tutorController.postMan
 
 router.post("/manage-profile",auth(UserRole.TUTOR), tutorController.postManageprofile)
 
+router.get('/tutor-metricsgrid/:id',auth(UserRole.TUTOR), tutorController.getMetricsGrid)
+
 
 
 export const tutorRouter: Router = router;

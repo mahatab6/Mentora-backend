@@ -85,6 +85,25 @@ const getAvailability = async (req: Request, res: Response) => {
   }
 }
 
+const getMetricsGrid = async (req: Request, res: Response) => {
+   try {
+
+    const {id} = req.params
+    const result = await tutorService.getMetricsGrid(id as string);
+    res.status(200).json({
+      success: true,
+      data: result,
+    });
+  } catch (error: any) {
+    res.status(400).json({
+      success: false,
+      message: error.message,
+    });
+  }
+}
+
+
+
 
 
 
@@ -94,4 +113,5 @@ export const tutorController = {
   getUniqueTutor,
   postManageAvailability,
   getAvailability,
+  getMetricsGrid
 };
