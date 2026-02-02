@@ -39,6 +39,14 @@ model booking {
   tutor   Tutor  @relation(fields: [tutorId], references: [tutor_id])
 }
 
+model Category {
+  id          Int      @id @default(autoincrement())
+  name        String   @unique
+  description String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
 model Review {
   id            Int      @id @default(autoincrement())
   rating        Int

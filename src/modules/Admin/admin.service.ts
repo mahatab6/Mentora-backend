@@ -1,5 +1,6 @@
 import { email } from "better-auth";
 import { prisma } from "../../lib/prisma";
+import { Category } from "../../../generated/prisma/client";
 
 const getDashboardCard = async () => {
   const totalRevenue = await prisma.booking.aggregate({
@@ -166,6 +167,19 @@ const bookings = await prisma.booking.findMany({
   return bookings
 }
 
+const updateCategory = async (id: number, name: string, description: string) => {
+  const result = await prisma.category.update({
+    where: {
+      id: id,
+    },
+    data: {
+      name: name,
+      description: description,
+    },
+  });
+  return result;
+};
+
 const updateRole = async (email:string, role: string) => {
  
   const result = await prisma.user.update({
@@ -179,10 +193,32 @@ const updateRole = async (email:string, role: string) => {
   return result
 }
 
+const postCategory = async (payload:Omit<Category, "updatedAt" | "createdAt" | "id">) => {
+  const result = await prisma.category.create({
+    data: payload
+  })
+
+  return result
+}
+
+const deleteCategory = async (id: number) => {
+  const result = await prisma.category.delete({
+    where: {
+      id: id
+    }
+  })
+
+  return result
+}
+
+
 export const adminService = {
   getDashboardCard,
   getBookingManagement,
   getAllEarningChart,
   getManageUsers,
-  updateRole
+  updateRole,
+  postCategory,
+  deleteCategory,
+  updateCategory
 };

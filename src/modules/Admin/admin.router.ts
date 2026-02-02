@@ -13,6 +13,12 @@ router.get('/all-earning-chart', adminController.getAllEarningChart)
 
 router.get('/manage-users', adminController.getManageUsers)
 
+router.post("/create-category", adminController.postCategory)
+
+router.delete("/delete-category", adminController.deleteCategory)
+
+router.patch("/update-category", adminController.updateCategory)
+
 router.patch('/update-role',auth(UserRole.ADMIN), adminController.updateRole)
 
 export const adminRouter: Router = router;

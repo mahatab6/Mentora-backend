@@ -15,7 +15,7 @@ export const auth = betterAuth({
                 type: "string",
                 defaultValue: "STUDENT",
                 required: false
-            }
+            },
         }
     },
     emailAndPassword:{
