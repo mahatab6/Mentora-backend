@@ -1,3 +1,4 @@
+import { email } from "better-auth";
 import { prisma } from "../../lib/prisma";
 
 const getDashboardCard = async () => {
@@ -101,6 +102,53 @@ const getBookingManagement = async (filters: any) => {
   };
 };
 
+const getManageUsers = async (filters: any) => {
+  const { email, role, page = "1", limit = "10" } = filters;
+
+  const skip = (Number(page) - 1) * Number(limit);
+  const take = Number(limit);
+
+  let whereConditions: any = {};
+
+  const andConditions = [];
+
+  if (email) {
+    andConditions.push({email: email});
+  }
+
+  if (role && role !== "all") {
+    andConditions.push({ role: role });
+  }
+
+
+  if (andConditions.length > 0) {
+    whereConditions = { AND: andConditions };
+  }
+
+  
+  const [result, total] = await Promise.all([
+    prisma.user.findMany({
+      where: whereConditions,
+      skip: skip,
+      take: take,
+      orderBy: { createdAt: "desc" },
+
+      
+    }),
+    prisma.user.count({ where: whereConditions }),
+  ]);
+
+  return {
+    users: result, 
+    meta: {
+      total,
+      page: Number(page),
+      limit: take,
+      totalPages: Math.ceil(total / take),
+    },
+  };
+};
+
 const getAllEarningChart = async () => {
 const bookings = await prisma.booking.findMany({
     where: {
@@ -118,8 +166,23 @@ const bookings = await prisma.booking.findMany({
   return bookings
 }
 
+const updateRole = async (email:string, role: string) => {
+ 
+  const result = await prisma.user.update({
+    where: {
+      email: email
+    },
+    data: {
+      role: role
+    }
+  })
+  return result
+}
+
 export const adminService = {
   getDashboardCard,
   getBookingManagement,
-  getAllEarningChart
+  getAllEarningChart,
+  getManageUsers,
+  updateRole
 };
