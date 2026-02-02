@@ -7,6 +7,7 @@ import { toNodeHandler } from "better-auth/node"
 import { tutorRouter } from "./modules/TutorManagement/tutor.router"
 import { bookingRouter } from "./modules/Bookings/bookings.router"
 import { reviewsRouter } from "./modules/Reviews/reviews.router"
+import { adminRouter } from "./modules/Admin/admin.router"
 
 app.use(express.json())
 app.use(cors({
@@ -28,6 +29,8 @@ app.use('/api/bookings', bookingRouter)
 
 // reviews
 app.use('/api/reviews', reviewsRouter)
+
+app.use('/api/admin', adminRouter)
 
 
 
