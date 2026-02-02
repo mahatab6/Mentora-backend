@@ -101,7 +101,25 @@ const getBookingManagement = async (filters: any) => {
   };
 };
 
+const getAllEarningChart = async () => {
+const bookings = await prisma.booking.findMany({
+    where: {
+      status: "completed",
+    },
+    select: {
+      price: true,
+      createdAt: true,
+    },
+    orderBy: {
+      createdAt: "asc",
+    },
+  });
+
+  return bookings
+}
+
 export const adminService = {
   getDashboardCard,
   getBookingManagement,
+  getAllEarningChart
 };
