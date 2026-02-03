@@ -3,8 +3,7 @@ import { reviewsService } from "./reviews.service";
 
 const postReview = async (req: Request, res: Response) => {
   try {
-    const id = req.user?.id;
-    const result = await reviewsService.postReview(req.body, id as string);
+    const result = await reviewsService.postReview(req.body);
     res.status(200).json({
       success: true,
       data: result,

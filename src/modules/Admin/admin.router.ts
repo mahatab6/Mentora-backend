@@ -17,6 +17,8 @@ router.post("/create-category", adminController.postCategory)
 
 router.delete("/delete-category", adminController.deleteCategory)
 
+router.get("/category", adminController.getCategory)
+
 router.patch("/update-category", adminController.updateCategory)
 
 router.patch('/update-role',auth(UserRole.ADMIN), adminController.updateRole)

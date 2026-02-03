@@ -211,6 +211,17 @@ const deleteCategory = async (id: number) => {
   return result
 }
 
+const getCategory = async () => {
+  const result = await prisma.category.findMany({
+    select: {
+      id: true,
+      name: true,
+      description: true
+    }
+  })
+  return result
+}
+
 
 export const adminService = {
   getDashboardCard,
@@ -220,5 +231,6 @@ export const adminService = {
   updateRole,
   postCategory,
   deleteCategory,
-  updateCategory
+  updateCategory,
+  getCategory
 };

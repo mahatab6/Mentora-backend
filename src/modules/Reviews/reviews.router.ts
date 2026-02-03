@@ -5,7 +5,7 @@ import { UserRole } from "../../type";
 
 const router = express.Router()
 
-router.post('/',auth(UserRole.STUDENT), reviewsController.postReview)
+router.post('/', reviewsController.postReview)
 
 router.get('/', reviewsController.getReview)
 
