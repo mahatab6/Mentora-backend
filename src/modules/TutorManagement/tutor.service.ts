@@ -63,7 +63,7 @@ const getAllTutor = async (filters: any) => {
 
   if (rating && rating !== "all") {
     const minRating = parseFloat(rating.replace("+", ""));
-    whereConditions.rating = { gte: minRating };
+    whereConditions.averageRating = { gte: minRating };
   }
 
   const [result, total] = await Promise.all([
@@ -206,6 +206,19 @@ const getBooking = async (id: string) => {
   return bookingInfo;
 };
 
+const updateProfile = async (payload: any) => {
+  const { tutor_id, ...updateData } = payload; 
+
+  const result = await prisma.tutor.update({
+    where: {
+      tutor_id: tutor_id,
+    },
+    data: updateData, 
+  });
+  
+  return result;
+};
+
 export const tutorService = {
   postManageprofile,
   getAllTutor,
@@ -214,5 +227,6 @@ export const tutorService = {
   getAvailability,
   getMetricsGrid,
   getEarningsChartData,
-  getBooking
+  getBooking,
+  updateProfile
 };

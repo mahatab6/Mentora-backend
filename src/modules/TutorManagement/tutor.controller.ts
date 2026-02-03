@@ -19,10 +19,10 @@ const postManageprofile = async (req: Request, res: Response) => {
 
 const getAllTutor = async (req: Request, res: Response) => {
   try {
-    const filters = req.query; 
-    
+    const filters = req.query;
+
     const result = await tutorService.getAllTutor(filters);
-    
+
     res.status(200).json({
       success: true,
       data: result,
@@ -35,10 +35,9 @@ const getAllTutor = async (req: Request, res: Response) => {
   }
 };
 
-
 const getUniqueTutor = async (req: Request, res: Response) => {
   try {
-    const {id} = req.params
+    const { id } = req.params;
     const result = await tutorService.getUniqueTutor(id as string);
     res.status(200).json({
       success: true,
@@ -52,11 +51,13 @@ const getUniqueTutor = async (req: Request, res: Response) => {
   }
 };
 
-
 const postManageAvailability = async (req: Request, res: Response) => {
   try {
     const id = req.user?.id;
-    const result = await tutorService.postManageAvailability(req.body, id as string);
+    const result = await tutorService.postManageAvailability(
+      req.body,
+      id as string,
+    );
     res.status(200).json({
       success: true,
       data: result,
@@ -67,11 +68,11 @@ const postManageAvailability = async (req: Request, res: Response) => {
       message: error.message,
     });
   }
-}
+};
 
 const getAvailability = async (req: Request, res: Response) => {
-   try {
-    const {id} = req.params
+  try {
+    const { id } = req.params;
     const result = await tutorService.getAvailability(id as string);
     res.status(200).json({
       success: true,
@@ -83,12 +84,11 @@ const getAvailability = async (req: Request, res: Response) => {
       message: error.message,
     });
   }
-}
+};
 
 const getMetricsGrid = async (req: Request, res: Response) => {
-   try {
-
-    const {id} = req.params
+  try {
+    const { id } = req.params;
     const result = await tutorService.getMetricsGrid(id as string);
     res.status(200).json({
       success: true,
@@ -100,12 +100,11 @@ const getMetricsGrid = async (req: Request, res: Response) => {
       message: error.message,
     });
   }
-}
+};
 
 const getEarningsChartData = async (req: Request, res: Response) => {
-   try {
-
-    const {id} = req.params
+  try {
+    const { id } = req.params;
     const result = await tutorService.getEarningsChartData(id as string);
     res.status(200).json({
       success: true,
@@ -117,12 +116,11 @@ const getEarningsChartData = async (req: Request, res: Response) => {
       message: error.message,
     });
   }
-}
+};
 
 const getBooking = async (req: Request, res: Response) => {
-   try {
-
-    const {id} = req.params
+  try {
+    const { id } = req.params;
     const result = await tutorService.getBooking(id as string);
     res.status(200).json({
       success: true,
@@ -134,12 +132,23 @@ const getBooking = async (req: Request, res: Response) => {
       message: error.message,
     });
   }
-}
+};
 
-
-
-
-
+const updateProfile = async (req: Request, res: Response) => {
+  try {
+    const result = await tutorService.updateProfile(req.body);
+    res.status(200).json({
+      success: true,
+      message: "update your profile",
+      data: result,
+    });
+  } catch (error: any) {
+    res.status(400).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
 
 export const tutorController = {
   postManageprofile,
@@ -149,5 +158,6 @@ export const tutorController = {
   getAvailability,
   getMetricsGrid,
   getEarningsChartData,
-  getBooking
+  getBooking,
+  updateProfile,
 };

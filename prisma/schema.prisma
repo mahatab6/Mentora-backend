@@ -60,7 +60,7 @@ model Review {
 }
 
 model Tutor {
-  id              Int      @id @default(autoincrement())
+  id              Int       @id @default(autoincrement())
   fullName        String
   country         String
   timezone        String
@@ -68,22 +68,22 @@ model Tutor {
   subjects        String[]
   photoUrl        String
   introVideoUrl   String?
-  shortBio        String   @db.VarChar(150)
-  aboutMe         String   @db.Text
+  shortBio        String    @db.VarChar(150)
+  aboutMe         String    @db.Text
   education       String
   hourlyRate      Int
   lessonDuration  String
-  totalLessons    Int      @default(0)
-  averageRating   Float    @default(0)
-  totalReviews    Int      @default(0)
-  isProfileActive Boolean  @default(false)
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
-
-  tutor_id String    @unique
-  tutor    User      @relation(fields: [tutor_id], references: [id])
-  bookings booking[]
-  reviews  Review[]
+  totalLessons    Int       @default(0)
+  averageRating   Float     @default(0)
+  totalReviews    Int       @default(0)
+  isProfileActive Boolean   @default(false)
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  category        String?
+  tutor_id        String    @unique
+  tutor           User      @relation(fields: [tutor_id], references: [id])
+  bookings        booking[]
+  reviews         Review[]
 }
 
 model User {

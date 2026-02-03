@@ -23,6 +23,8 @@ router.get('/earnings-chart/:id',tutorController.getEarningsChartData)
 
 router.get('/booking/:id',tutorController.getBooking)
 
+router.patch('/tutor-profile-update', tutorController.updateProfile)
+
 
 
 export const tutorRouter: Router = router;
