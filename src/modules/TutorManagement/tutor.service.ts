@@ -35,7 +35,7 @@ const postManageprofile = async (
 };
 
 const getAllTutor = async (filters: any) => {
-  const { search, subject, price, rating, page = "1", limit = "10" } = filters;
+  const { search, category, price, rating, page = "1", limit = "10" } = filters;
   const skip = (Number(page) - 1) * Number(limit);
   const whereConditions: any = {};
 
@@ -43,13 +43,13 @@ const getAllTutor = async (filters: any) => {
     whereConditions.OR = [
       { fullName: { contains: search, mode: "insensitive" } },
       { shortBio: { contains: search, mode: "insensitive" } },
+      { subjects: { hasSome: [search] } },
     ];
   }
 
-  if (subject && subject !== "all") {
-    whereConditions.subjects = {
-      has: subject,
-    };
+  if (category && category !== "all") {
+    whereConditions.category = { equals: category, mode: "insensitive" };
+  
   }
   if (price && price !== "all") {
     if (price.includes("-")) {

@@ -8,6 +8,7 @@ import { tutorRouter } from "./modules/TutorManagement/tutor.router"
 import { bookingRouter } from "./modules/Bookings/bookings.router"
 import { reviewsRouter } from "./modules/Reviews/reviews.router"
 import { adminRouter } from "./modules/Admin/admin.router"
+import { studentRouter } from "./modules/Student/student.router"
 
 app.use(express.json())
 app.use(cors({
@@ -30,7 +31,11 @@ app.use('/api/bookings', bookingRouter)
 // reviews
 app.use('/api/reviews', reviewsRouter)
 
+// admin
 app.use('/api/admin', adminRouter)
+
+// student
+app.use('/api/student', studentRouter)
 
 
 
