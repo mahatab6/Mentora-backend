@@ -47,8 +47,26 @@ const getReviewByID = async (req: Request, res: Response) => {
   }
 };
 
+const reviewReplay = async (req: Request, res: Response) => {
+  try {
+    const id = req.body.id
+    const replay = req.body.replay
+    const result = await reviewsService.reviewReplay(id as number, replay as string);
+    res.status(200).json({
+      success: true,
+      data: result,
+    });
+  } catch (error: any) {
+    res.status(400).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
 export const reviewsController = {
   postReview,
   getReview,
-  getReviewByID
+  getReviewByID,
+  reviewReplay
 };

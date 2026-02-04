@@ -1,9 +1,9 @@
 import { Review } from "../../../generated/prisma/client";
 import { prisma } from "../../lib/prisma";
 
-const postReview = async (
-  payload: Omit<Review, "id" | "createdAt" | "replyContent">,
-) => {
+const postReview = async (payload: Omit<Review, "id" | "createdAt" | "replyContent">,) => {
+
+
   const result = await prisma.$transaction(async (tx) => {
     const newReview = await tx.review.create({
       data: {
@@ -84,8 +84,22 @@ const getReviewByID = async (id: string) => {
   return result;
 };
 
+const reviewReplay = async (id: number, replay: string) => {
+  const result = await prisma.review.update({
+      where: {
+        id: id
+      },
+      data: {
+        replyContent: replay
+      }
+  })
+
+  return result
+}
+
 export const reviewsService = {
   postReview,
   getReview,
   getReviewByID,
+  reviewReplay
 };
