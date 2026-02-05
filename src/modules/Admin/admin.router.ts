@@ -13,13 +13,13 @@ router.get('/all-earning-chart', adminController.getAllEarningChart)
 
 router.get('/manage-users', adminController.getManageUsers)
 
-router.post("/create-category", adminController.postCategory)
+router.post("/create-category",auth(UserRole.ADMIN), adminController.postCategory)
 
-router.delete("/delete-category", adminController.deleteCategory)
+router.delete("/delete-category",auth(UserRole.ADMIN), adminController.deleteCategory)
 
 router.get("/category", adminController.getCategory)
 
-router.patch("/update-category", adminController.updateCategory)
+router.patch("/update-category",auth(UserRole.ADMIN), adminController.updateCategory)
 
 router.patch('/update-role',auth(UserRole.ADMIN), adminController.updateRole)
 

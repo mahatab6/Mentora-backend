@@ -150,6 +150,26 @@ const updateProfile = async (req: Request, res: Response) => {
   }
 };
 
+
+const updateStatus =async (req: Request, res: Response) => {
+  try {
+    const id = Number(req.body.id)
+    const status = req.body.status;
+    const result = await tutorService.updateStatus(id as number, status);
+    res.status(200).json({
+      success: true,
+      data: result,
+    });
+  } catch (error:any) {
+    res.status(400).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
+
+
 export const tutorController = {
   postManageprofile,
   getAllTutor,
@@ -160,4 +180,5 @@ export const tutorController = {
   getEarningsChartData,
   getBooking,
   updateProfile,
+  updateStatus
 };

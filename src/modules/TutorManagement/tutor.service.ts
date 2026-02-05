@@ -1,4 +1,4 @@
-import { Tutor, tutorAvailability } from "../../../generated/prisma/client";
+import { Status, Tutor, tutorAvailability } from "../../../generated/prisma/client";
 import { prisma } from "../../lib/prisma";
 import { AvailabilityDTO } from "../../type";
 
@@ -219,6 +219,19 @@ const updateProfile = async (payload: any) => {
   return result;
 };
 
+
+const updateStatus = async (id: number, status: Status) => {
+  const result = await prisma.booking.update({
+    where: {
+      id: Number(id)
+    },
+    data: {
+      status: status,
+    },
+  });
+  return result;
+};
+
 export const tutorService = {
   postManageprofile,
   getAllTutor,
@@ -228,5 +241,6 @@ export const tutorService = {
   getMetricsGrid,
   getEarningsChartData,
   getBooking,
-  updateProfile
+  updateProfile,
+  updateStatus
 };

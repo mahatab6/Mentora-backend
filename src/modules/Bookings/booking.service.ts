@@ -39,6 +39,11 @@ const getBooking = async (id: string) => {
           fullName: true,
         },
       },
+      student: {
+        select: {
+          name: true
+        }
+      }
     },
   });
 

@@ -9,6 +9,6 @@ import { studentController } from "./student.controller";
 const router = express.Router()
 
 router.patch('/',auth(UserRole.STUDENT), studentController.updateProfile)
-router.patch('/status',auth(UserRole.STUDENT), studentController.updateStatus)
+router.patch('/status',auth(UserRole.STUDENT, UserRole.TUTOR), studentController.updateStatus)
 
 export const studentRouter: Router = router;

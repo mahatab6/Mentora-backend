@@ -23,7 +23,9 @@ router.get('/earnings-chart/:id',tutorController.getEarningsChartData)
 
 router.get('/booking/:id',tutorController.getBooking)
 
-router.patch('/tutor-profile-update', tutorController.updateProfile)
+router.patch('/tutor-profile-update',auth(UserRole.TUTOR), tutorController.updateProfile)
+
+router.patch('/status',auth(UserRole.TUTOR), tutorController.updateStatus)
 
 
 
