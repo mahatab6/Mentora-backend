@@ -105,6 +105,25 @@ const updateRole = async (req: Request, res: Response) => {
   }
 };
 
+const updateStatus = async (req: Request, res: Response) => {
+  try {
+    const user = req.body;
+    const email = user.email;
+    const status = user.status;
+    const result = await adminService.updateStatus(email, status);
+    res.status(200).json({
+      success: true,
+      message: "Role update",
+      data: result,
+    });
+  } catch (error: any) {
+    res.status(400).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
 const postCategory =async (req: Request, res: Response) => {
     try {
     const result = await adminService.postCategory(req.body);
@@ -164,5 +183,6 @@ export const adminController = {
   postCategory,
   deleteCategory,
   updateCategory,
-  getCategory
+  getCategory,
+  updateStatus
 };

@@ -193,6 +193,19 @@ const updateRole = async (email:string, role: string) => {
   return result
 }
 
+const updateStatus = async (email:string, status: string) => {
+ 
+  const result = await prisma.user.update({
+    where: {
+      email: email
+    },
+    data: {
+      status: status
+    }
+  })
+  return result
+}
+
 const postCategory = async (payload:Omit<Category, "updatedAt" | "createdAt" | "id">) => {
   const result = await prisma.category.create({
     data: payload
@@ -232,5 +245,6 @@ export const adminService = {
   postCategory,
   deleteCategory,
   updateCategory,
-  getCategory
+  getCategory,
+  updateStatus
 };

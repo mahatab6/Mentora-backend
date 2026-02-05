@@ -23,4 +23,6 @@ router.patch("/update-category", adminController.updateCategory)
 
 router.patch('/update-role',auth(UserRole.ADMIN), adminController.updateRole)
 
+router.patch('/update-status',auth(UserRole.ADMIN), adminController.updateStatus)
+
 export const adminRouter: Router = router;

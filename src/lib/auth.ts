@@ -14,6 +14,11 @@ export const auth = betterAuth({
         defaultValue: "STUDENT",
         required: false,
       },
+      status: {
+        type: "string",
+        defaultValue: "UNBAN",
+        required: false,
+      }
     },
   },
   emailAndPassword: {

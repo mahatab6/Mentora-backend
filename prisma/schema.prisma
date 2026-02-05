@@ -104,6 +104,8 @@ model User {
   bookings            booking[]
   reviews             Review[]
 
+  status String? @default("UNBAN")
+
   @@unique([email])
   @@map("user")
 }
