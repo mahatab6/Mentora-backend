@@ -1,12 +1,16 @@
 import { betterAuth } from "better-auth";
 import { prismaAdapter } from "better-auth/adapters/prisma";
 import { prisma } from "./prisma";
+import { bearer } from "better-auth/plugins";
 
 export const auth = betterAuth({
   database: prismaAdapter(prisma, {
     provider: "postgresql",
   }),
-  trustedOrigins: [process.env.BETTER_AUTH_URL!],
+  trustedOrigins: [
+    process.env.BETTER_AUTH_URL!, // backend
+    process.env.FRONTEND_URL!, // vercel frontend
+  ],
   user: {
     additionalFields: {
       role: {
@@ -34,7 +38,11 @@ export const auth = betterAuth({
       clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
     },
   },
-  session: {
+
+  plugins: [
+    bearer(),  
+  ],
+   session: {
     cookieCache: {
       enabled: true,
       maxAge: 5 * 60, // 5 minutes
@@ -48,4 +56,7 @@ export const auth = betterAuth({
     },
     disableCSRFCheck: true, // Allow requests without Origin header (Postman, mobile apps, etc.)
   },
+
+  
+
 });
